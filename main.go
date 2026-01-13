@@ -28,7 +28,7 @@ func (c *config) PrintCurrentPage() {
 
 func main() {
     currentpage := 0
-    interval := 5 * time.Minute
+    interval := time.Hour
 	cfg := config{
 		pokeapiClient: pokeapi.NewClient(interval),
         currentPage: currentpage,
