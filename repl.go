@@ -3,11 +3,9 @@ package main
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"os"
 	"strings"
 )
-
 
 func UsagePrinter(cmdMap *map[string]CliCommand) {
 	fmt.Println("Welcome to the Pokedex!")
@@ -35,14 +33,26 @@ func getCommands() map[string]CliCommand {
 			callback:    commandHelp,
 		},
 
-        "map": {
-            name: "map",
-            description: "Display all the location areas",
-            callback: commandMap,
-        },
+		"map": {
+			name:        "map",
+			description: "Display all the location areas - 20 location areas each",
+			callback:    commandMap,
+		},
+
+		"mapb": {
+			name:        "mapb",
+			description: "Display location areas - Go back",
+			callback:    commandMapb,
+		},
+
+		"clear": {
+			name:        "clear",
+			description: "Clear everything in the console",
+			callback:    commandClear,
+		},
 	}
 
-    return cmdMap
+	return cmdMap
 }
 
 func cleanInput(text string) []string {
@@ -56,7 +66,7 @@ func cleanInput(text string) []string {
 }
 
 func startRepl(cfg *config) {
-    availableCommands := getCommands()
+	availableCommands := getCommands()
 	UsagePrinter(&availableCommands)
 	scanner := bufio.NewScanner(os.Stdin)
 
@@ -66,16 +76,19 @@ func startRepl(cfg *config) {
 
 		input := cleanInput(scanner.Text())
 
-        if len(input) == 0 {
-            continue
-        }
+		if len(input) == 0 {
+			continue
+		}
 
 		command, ok := availableCommands[input[0]]
 		if !ok {
 			fmt.Println("Unknown command")
-            continue
+			continue
 		}
 
-        command.callback(cfg)
+		err := command.callback(cfg)
+		if err != nil {
+			fmt.Println(err)
+		}
 	}
 }
