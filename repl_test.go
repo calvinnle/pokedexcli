@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"testing"
 )
 
@@ -13,7 +12,7 @@ func TestCleanInput(t *testing.T) {
 	}{
 		{
 			input:    "hi my name is Khang",
-			expected: []string{"hi", "my", "name", "is", "Khang"},
+			expected: []string{"hi", "my", "name", "is", "khang"},
 		},
 
         {
@@ -39,7 +38,8 @@ func TestCleanInput(t *testing.T) {
 			// if they don't match, use t.Errorf to print an error message
 			// and fail the test
             if word != expectedWord {
-                fmt.Errorf("wrong ass impl")
+                t.Errorf("Expected: %v", expectedWord)
+                t.Errorf("Got: %v", word)
             }
 	 	}
 	}
