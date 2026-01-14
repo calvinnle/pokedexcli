@@ -1,3 +1,6 @@
+default:
+	echo 'do nothing bro'
+
 build:
 	go build .
 

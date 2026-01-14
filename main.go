@@ -12,26 +12,28 @@ type config struct {
 	nextLocationAreaUrl *string
 	prevLocationAreaUrl *string
 	currentPage         int
+	pokedex             []string
 }
 
 func (c *config) NextPage() {
-    c.currentPage++
+	c.currentPage++
 }
 
 func (c *config) PrevPage() {
-    c.currentPage--
+	c.currentPage--
 }
 
 func (c *config) PrintCurrentPage() {
-    fmt.Printf("You're on page %d\n", c.currentPage)
+	fmt.Printf("You're on page %d\n", c.currentPage)
 }
 
 func main() {
-    currentpage := 0
-    interval := time.Hour
+	currentpage := 0
+	interval := time.Hour
 	cfg := config{
 		pokeapiClient: pokeapi.NewClient(interval),
-        currentPage: currentpage,
+		currentPage:   currentpage,
+        pokedex: make([]string, 0),
 	}
 
 	startRepl(&cfg)

@@ -49,4 +49,5 @@ func (c *Cache) ReapLoop(interval time.Duration) {
     }
 }
 
-func (c *Cache) ClearCache() {}
+func (c *Cache) ClearCache() {
+}

@@ -50,6 +50,30 @@ func getCommands() map[string]CliCommand {
 			description: "Clear everything in the console",
 			callback:    commandClear,
 		},
+
+		"explore": {
+			name:        "explore",
+			description: "Explore pokemon in the area",
+			callback:    commandExplore,
+		},
+
+		"catch": {
+			name:        "catch",
+			description: "catch and molest pokemon by name",
+			callback:    commandCatch,
+		},
+        
+		"pokedex": {
+			name:        "pokedex",
+			description: "catch and molest pokemon by name",
+			callback:    commandPokedex,
+		},
+
+		"inspect": {
+			name:        "inspect",
+			description: "inspect pokemon by name",
+			callback:    commandInspect,
+		},
 	}
 
 	return cmdMap
@@ -86,7 +110,12 @@ func startRepl(cfg *config) {
 			continue
 		}
 
-		err := command.callback(cfg)
+        var arg string
+        if len(input) > 1 {
+            arg = input[1]  
+        }
+
+		err := command.callback(cfg, arg)
 		if err != nil {
 			fmt.Println(err)
 		}

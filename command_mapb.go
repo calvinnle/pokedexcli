@@ -1,11 +1,13 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
-func commandMap(cfg *config, arg string) error {
-	resp, err := cfg.pokeapiClient.ListLocationAreas(cfg.nextLocationAreaUrl)
+func commandMapb(cfg *config, arg string) error {
+	if cfg.prevLocationAreaUrl == nil {
+		return fmt.Errorf("you're on the first page dumbass")
+	}
+
+	resp, err := cfg.pokeapiClient.ListLocationAreas(cfg.prevLocationAreaUrl)
 	if err != nil {
 		return fmt.Errorf("error making request: %v", err)
 	}
@@ -16,11 +18,10 @@ func commandMap(cfg *config, arg string) error {
 		fmt.Printf("%v\n", listLocations[i].Name)
 	}
 
-	cfg.NextPage()
+	cfg.PrevPage()
 	cfg.PrintCurrentPage()
 
 	cfg.nextLocationAreaUrl = resp.Next
 	cfg.prevLocationAreaUrl = resp.Previous
-
 	return nil
 }
